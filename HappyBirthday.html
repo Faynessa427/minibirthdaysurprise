@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Message</title>
+    </head>
+       <body>
+        <div class="greet-card">
+        <h1 id="greeting"></h1>
+        <p id="message"></p>
+    </div>
+    <script>
+        const name = localStorage.getItem("username");
+        const color = localStorage.getItem("favColor");
+
+        const greeting = document.getElementById('greeting');
+        const message = document.getElementById('message');
+
+        greeting.textContent = `🎂 Happy Birthday, ${name} 🥳🎉!!!`;
+        greeting.style.color = color;
+
+        message.textContent = `Sending you the biggest hug ever!! I hope this new chapter brings you so much peace, answered prayers, and genuinely happy moments. Wishing you top-tier vibes all year long and those little moments where you're like "yeah, life is good." You deserve the absolute best today and always. Enjoy your day to the fullest!! 💖✨`;
+        message.style.color = color;
+    </script>
+    <style>
+        body {
+            background-color: #fff8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .greet-card {
+            margin-top: 5%;
+            padding: 20px;
+            animation: slideUp 3.5s ease infinite;
+        }
+        #greeting {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.9rem;
+            font-weight: 900;
+            font-style: italic;
+            text-shadow: 2px 2px 2px white;
+            animation: bounce 4s ease infinite;
+        }
+
+        #message {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 1.3rem;
+            max-width: 600px;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+     </body>
+     </html>
