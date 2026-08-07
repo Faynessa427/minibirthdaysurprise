@@ -16,7 +16,7 @@
             }
 
             if (!isValidCssColor(color)) {
-                document.getElementById('colorError').textContent = 'Color invalid. Enter a valid CSS color.';
+                document.getElementById('colorError').textContent = 'Color invalid. Enter a valid color.';
                 return;
             }
 
