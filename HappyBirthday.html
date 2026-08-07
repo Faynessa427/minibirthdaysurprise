@@ -6,32 +6,85 @@
     <title>Birthday Message</title>
     </head>
        <body>
+        <div class="starfield" id="starfield"></div>
         <div class="greet-card">
         <h1 id="greeting"></h1>
         <p id="message"></p>
     </div>
     <script>
+        function getDisplayColor(color) {
+            if (!color) return color;
+            const normalized = color.trim().toLowerCase();
+            if (normalized === 'pink') return '#ff69b4';
+            return color;
+        }
+
+        function getDeepColor(color) {
+            const temp = document.createElement('div');
+            temp.style.color = '';
+            temp.style.color = color;
+            document.body.appendChild(temp);
+            const computed = getComputedStyle(temp).color;
+            document.body.removeChild(temp);
+            const match = computed.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (!match) return color;
+            const r = Math.max(0, Math.min(255, Math.round(Number(match[1]) * 0.75)));
+            const g = Math.max(0, Math.min(255, Math.round(Number(match[2]) * 0.75)));
+            const b = Math.max(0, Math.min(255, Math.round(Number(match[3]) * 0.75)));
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
         const name = localStorage.getItem("username");
-        const color = localStorage.getItem("favColor");
+        const rawColor = localStorage.getItem("favColor");
+        const displayColor = getDisplayColor(rawColor);
+        const deepColor = getDeepColor(rawColor);
 
         const greeting = document.getElementById('greeting');
         const message = document.getElementById('message');
+        const starfield = document.getElementById('starfield');
+
+        function createStars(count, color) {
+            if (!starfield) return;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.backgroundColor = color;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                star.style.opacity = `${Math.random() * 0.5 + 0.4}`;
+                starfield.appendChild(star);
+            }
+        }
 
         greeting.textContent = `🎂 Happy Birthday, ${name} 🥳🎉!!!`;
-        greeting.style.color = color;
+        greeting.style.color = deepColor;
 
         message.textContent = `Sending you the biggest hug ever!! I hope this new chapter brings you so much peace, answered prayers, and genuinely happy moments. Wishing you top-tier vibes all year long and those little moments where you're like "yeah, life is good." You deserve the absolute best today and always. Enjoy your day to the fullest!! 💖✨`;
-        message.style.color = color;
+        message.style.color = deepColor;
+        createStars(40, displayColor || '#ffffff');
     </script>
     <style>
         body {
+            position: relative;
+            overflow: hidden;
             background-color: #fff8f0;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
         }
+        .starfield {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
         .greet-card {
+            position: relative;
+            z-index: 1;
             margin-top: 5%;
             padding: 20px;
             animation: slideUp 3.5s ease infinite;
@@ -49,6 +102,23 @@
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             font-size: 1.3rem;
             max-width: 600px;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 8px currentColor);
+            animation: sparkle 2.5s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.8);
+                opacity: 1;
+            }
         }
 
         @keyframes slideUp {
